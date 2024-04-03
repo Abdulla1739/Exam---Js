@@ -12,32 +12,35 @@
     <div style="text-align: center; margin: 0 auto;">
         <input type="text" id="newTask" placeholder="Enter a new task">
         <button onclick="addNote()" id="add-task">Add Task</button>
-        
     </div>
     <ol id="output"></ol>
 </body>
 
-
 <script>
-
-
 const output = document.getElementById('output');
 const newTask = document.getElementById('newTask');
 
 function addNote() {
     if(newTask.value) {
-        output.innerHTML += `<li>${newTask.value}</li> <button id="delTask">Del Task</button> <button id="markCompleted">Completed</button>`;
+        let li = document.createElement('li');
+        li.innerHTML = `${newTask.value}<br><span class="status">Status: Not Completed</span><br>  <button onclick="delTask(this)">Del Task</button> <button onclick="compltetask(this)">Complete</button> `;
+        output.appendChild(li);
         localStorage.setItem('tasks', JSON.stringify(output.innerHTML));
         newTask.value = '';
-
-
-
-        
-    }else{
-            alert("Please enter the notes in the box")
-        }
-
+    } else {
+        alert("Please enter the notes in the box");
+    }
 }
 
+function delTask(btn) {
+    let li = btn.parentNode;
+    output.removeChild(li);
+}
+
+function compltetask(btn) {
+    let li = btn.parentNode;
+    let status = li.querySelector('.status');
+    status.textContent = "Status: Completed";
+}
 </script>
 </html>
